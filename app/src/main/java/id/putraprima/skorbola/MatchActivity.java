@@ -11,22 +11,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 public class MatchActivity extends AppCompatActivity {
 
-    private String hometeam;
-    private String awayteam;
-    private String winner;
-    private int homescore;
-    private int awayscore;
-    private TextView scoreHome;
-    private TextView scoreAway;
-    private TextView homeText;
-    private TextView awayText;
-    private ImageView homeLogo;
-    private ImageView awayLogo;
-    private Button addHome;
-    private Button addAway;
-    private Button cekResult;
+    private String hometeam, awayteam, winner;
+    private int homescore, awayscore;
+    private TextView scoreHome, scoreAway, homeText, awayText;
+    private ImageView homeLogo, awayLogo;
+    private Button addHome, addHome2, addHome3, addAway, addAway2, addAway3, cekResult, reset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +31,13 @@ public class MatchActivity extends AppCompatActivity {
         homeLogo = findViewById(R.id.home_logo);
         awayLogo = findViewById(R.id.away_logo);
         addHome = findViewById(R.id.btn_add_home);
+        addHome2 = findViewById(R.id.btn_add_home2);
+        addHome3 = findViewById(R.id.btn_add_home3);
         addAway = findViewById(R.id.btn_add_away);
+        addAway2 = findViewById(R.id.btn_add_away2);
+        addAway3 = findViewById(R.id.btn_add_away3);
         cekResult = findViewById(R.id.btn_result);
+        reset = findViewById(R.id.btn_reset);
 
         homescore = 0;
         awayscore = 0;
@@ -63,10 +60,42 @@ public class MatchActivity extends AppCompatActivity {
             }
         });
 
+        addHome2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                homescore += 2;
+                scoreHome.setText(String.valueOf(homescore));
+            }
+        });
+
+        addHome3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                homescore += 3;
+                scoreHome.setText(String.valueOf(homescore));
+            }
+        });
+
         addAway.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 awayscore += 1;
+                scoreAway.setText(String.valueOf(awayscore));
+            }
+        });
+
+        addAway2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                awayscore += 2;
+                scoreAway.setText(String.valueOf(awayscore));
+            }
+        });
+
+        addAway3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                awayscore += 3;
                 scoreAway.setText(String.valueOf(awayscore));
             }
         });
@@ -76,18 +105,28 @@ public class MatchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 winner = "empty";
                 if(homescore > awayscore){
-                    winner = hometeam;
+                    winner = hometeam + " Menang!";
                 }
                 else if (homescore == awayscore){
-                    winner = "draw";
+                    winner = "Hasil kedua tim Seri!";
                 }
                 else {
-                    winner = awayteam;
+                    winner = awayteam + " Menang!";
                 }
 
                 Intent intent = new Intent(MatchActivity.this, ResultActivity.class);
                 intent.putExtra("winner", winner);
                 startActivity(intent);
+            }
+        });
+
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                homescore = 0;
+                awayscore = 0;
+                scoreHome.setText(String.valueOf(homescore));
+                scoreAway.setText(String.valueOf(awayscore));
             }
         });
 
